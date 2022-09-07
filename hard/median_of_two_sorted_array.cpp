@@ -4,7 +4,7 @@ using namespace std;
 
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 		int s1 = nums1.size(), s2 = nums2.size();
 		int i = 0, j = 0;
 		vector<int> tmp;
@@ -27,5 +27,5 @@ public:
 		} else {
 			return (tmp[s / 2] + tmp[s / 2 -1]) / 2.0;
 		}
-    }
+	}
 };
