@@ -1,22 +1,27 @@
-#include <algorithm>
-#include <bits/stdc++.h>
-#include <vector>
+#include <queue>
 
 using namespace std;
 
 class Solution {
 public:
 	int climbStairs(int n) {
-		int ret = 0;
-		vector<int> v;
-		for (int i = 1; i <= n; i++) {
-			v.push_back(i);
+		if (n == 1)
+			return 1;
+		int i = 1;
+		int tmp;
+		queue<int> q;
+		while (i <= n) {
+			if (i == 1 || i == 2)
+				q.push(i);
+			else {
+				tmp = q.front();
+				q.pop();
+				tmp += q.front();
+				q.push(tmp);
+			}
+			++i;
 		}
-		for (int i = 0; i < n; i ++) {
-			do {
-				ret++;
-			} while (next_permutation(v.begin(), v.begin() + i));
-		}
-		return ret;
+		q.pop();
+		return q.front();
     }
 };
