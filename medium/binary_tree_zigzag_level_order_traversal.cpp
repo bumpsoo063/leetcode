@@ -1,5 +1,4 @@
 #include <vector>
-#include <iostream>
 #include <queue>
 
 using namespace std;
@@ -14,48 +13,33 @@ struct TreeNode {
 };
 
 class Solution {
-private:
-	queue<TreeNode*> q;
-	void helper(TreeNode* root, int depth) {
-		TreeNode *tmp, *first, *second;
-		tmp = q.front();
-		if (tmp == nullptr)
-			return ;
-		q.pop();
-		if (depth % 2) {
-			first = tmp->left;
-			second = tmp->right;
-		} else {
-			first = tmp->right;
-			second = tmp->left;
-		}
-		q.push(first);
-		q.push(second);
-
-	}
 public:
 	vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+		int level = 0, level_size, i =0;
+		TreeNode *tmp;
+		queue<TreeNode*> q;
+		vector<vector<int>> ret;
 		q.push(root);
-		int i = 0;
-		while (1) {
-			TreeNode* tmp = q.front();
-			if (tmp == nullptr)
-				break;
-			q.pop();
-			if (tmp->left)
-				q.push(tmp->left);
-			if (tmp->right)
-				q.push(tmp->right);
+		if (root == nullptr)
+			return ret;
+		while (!q.empty()) {
+			i = 0;
+			level_size = q.size();
+			vector<int> vec(level_size);
+			while (i < level_size) {
+				tmp = q.front();
+				q.pop();
+				if (level % 2) {
+					vec[i++] = tmp->val;
+				} else {
+					vec[level_size - i++ - 1] = tmp->val;
+				}
+				if (tmp->right) q.push(tmp->right);
+				if (tmp->left) q.push(tmp->left);
+			}
+			ret.push_back(vec);
+			level++;
 		}
-		return vector<vector<int>>();
+		return ret;
 	}
 };
-int main() {
-	TreeNode* root = new TreeNode(3);
-	root->left = new TreeNode(9);
-	root->right = new TreeNode(20);
-	root->left->left = new TreeNode(15);
-	root->left->right = new TreeNode(7);
-	Solution s;
-	s.zigzagLevelOrder(root);
-}
